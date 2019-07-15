@@ -1,69 +1,63 @@
-import java.util.*;
+import java.util.Random;
 
-public class BankAccount{
-  protected String accountNumber;
-  protected long checkingBalance;
-  protected long savingsBalance;
-  protected static int numAccounts;
-  protected static long totalMoney;
-
-  private String getAccountNumber(){
-    Random rand = new Random();
-    ArrayList<Integer> digits = new ArrayList<Integer>();
-    for(int i = 1; i < 11; i++){
-      int randomNum = rand.nextInt(9) + 1;
-      digits.add(randomNum);
+public class BankAccount {
+    private String accountNumber;
+    private double checkingBalance;
+    private double savingsBalance;
+    public static int numberOfAccounts = 0;
+    public static double accountsTotalBalance = 0;
+    private String setAccountNumber() {
+		Random r = new Random();
+		String accountNum = "";
+		for (int i = 0; i < 9; i++) {
+			accountNum += String.valueOf(r.nextInt(10 - 1 + 1) + 1);
+		}
+        return accountNum;
     }
-    this.accountNumber = String.valueOf(digits.get(0));
-    for(int i = 1; i < digits.size(); i++){
-      this.accountNumber += digits.get(i);
+    public BankAccount() {
+        this.accountNumber = setAccountNumber();
+        numberOfAccounts++;
     }
-    System.out.println(this.accountNumber);
-    return this.accountNumber;
-  }
-
-  public BankAccount(){
-     numAccounts ++;
-     this.getAccountNumber();
-  }
-
-  public long getChecking(){
-    return this.checkingBalance;
-  }
-
-  public long getSaving(){
-    return this.savingsBalance;
-  }
-
-  public void depositMoney(int checking, int saving){
-    this.checkingBalance += checking;
-    this.savingsBalance += saving;
-    totalMoney += checking;
-    totalMoney += saving;
-    System.out.println("Your balance is now $"+ this.checkingBalance + " in checking and $"+ this.savingsBalance + " in savings." );
-  }
-
-  public void withdrawMoney(int checking, int saving){
-    if(this.checkingBalance > 0){
-      this.checkingBalance -= checking;
-      totalMoney -= checking;
-      System.out.println("Your checking balance is now $" + this.checkingBalance);
-    }
-    else{
-      System.out.println("Your checking account is empty.");
-    }
-
-    if(this.savingsBalance > 0){
-      this.savingsBalance -= saving;
-      totalMoney -= saving;
-      System.out.println("Your savings balance is now $" + this.savingsBalance);
-    }
-    else{
-      System.out.println("Your savings account is empty.");
-    }
-  }
-
-  public static long getTotalMoney(){
-    return totalMoney;
-  }
+	public String getAccountNumber() {
+		return "Account Number: " + accountNumber;
+	}
+	public String getCheckingBalance() {
+		return "Checking Account Balance: $" + checkingBalance;
+	}
+	public void depositCheckings(double amount) {
+		this.checkingBalance += amount;
+		accountsTotalBalance += amount;
+	}
+	public void depositSavings(double amount) {
+		this.savingsBalance += amount;
+		accountsTotalBalance += amount;
+	}
+	public String getSavingsBalance() {
+		return "Savings Account Balance: $" + savingsBalance;
+	}
+	public static String getNumberOfAccounts() {
+		return "Number of Accounts: " + numberOfAccounts;
+	}
+	public static String getAccountsTotalBalance() {
+		return "Accounts Total Balance: $" + accountsTotalBalance;
+	}
+	public void withdrawalCheckings(double amount) {
+		if (amount > this.checkingBalance) {
+			System.out.println("Insufficient Funds!");
+		} else {
+			this.checkingBalance -= amount;
+			accountsTotalBalance -= amount;
+		}
+	}
+	public void withdrawalSavings(double amount) {
+		if (amount > this.savingsBalance) {
+			System.out.println("Insufficient Funds!");
+		} else {
+			this.savingsBalance -= amount;
+			accountsTotalBalance -= amount;
+		}
+	}
+    public String totalAmount() {
+		return "Total Account Balance: $" + (checkingBalance + savingsBalance);
+	}
 }

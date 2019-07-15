@@ -2,17 +2,19 @@ public class BankAccountTest {
   public static void main(String[] args) {
     BankAccount a = new BankAccount();
     BankAccount b = new BankAccount();
-    BankAccount c = new BankAccount();
+    
 
-    a.depositMoney(200, 400);
-    b.depositMoney(100, 450);
-    c.depositMoney(300, 120);
-    a.withdrawMoney(60, 80);
-    b.withdrawMoney(40, 200);
+        a.depositCheckings(400);
+        a.withdrawalCheckings(150);
+        a.depositSavings(300);
+        b.depositSavings(200);
+        b.depositCheckings(380);
+        b.withdrawalSavings(120);
 
-    System.out.println(c.getChecking());
-    System.out.println(a.getSaving());
-
-    System.out.println(BankAccount.getTotalMoney());
+        System.out.println(a.getCheckingBalance());
+        System.out.println(a.getAccountNumber());
+        System.out.println(b.totalAmount());
+        System.out.println(BankAccount.getNumberOfAccounts());
+        System.out.println(BankAccount.getAccountsTotalBalance());
   }
 }
